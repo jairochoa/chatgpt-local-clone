@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+backend/__init__.py
+backend/app.py
+chatgpt_local_clone.egg-info/PKG-INFO
+chatgpt_local_clone.egg-info/SOURCES.txt
+chatgpt_local_clone.egg-info/dependency_links.txt
+chatgpt_local_clone.egg-info/top_level.txt
+config/__init__.py
+config/settings.py
+ui/__init__.py
+ui/chainlit_app.py
