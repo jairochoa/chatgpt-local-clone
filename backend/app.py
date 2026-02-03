@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, Form
 import base64
 from pydantic import BaseModel
+from agents.graph import run_graph
 from typing import List, Optional, Literal
 
 from config.settings import load_config
@@ -30,20 +31,10 @@ def chat_completions(req: ChatReq):
     model = req.model or cfg.ollama.text_model
     temperature = req.temperature if req.temperature is not None else cfg.ollama.temperature
 
-    payload = {
-        "model": model,
-        "messages": [{"role": m.role, "content": m.content} for m in req.messages],
-        "options": {"temperature": temperature},
-        "stream": False,
-    }
+    # Enrutamos la petición por el grafo (router + agente PC o chat)
+    user_text = req.messages[-1].content
+    text = run_graph(user_text)
 
-    # Llamada directa a API HTTP de Ollama (simple y explícita)
-    url = f"{cfg.ollama.base_url}/api/chat"
-    r = requests.post(url, json=payload, timeout=180)
-    r.raise_for_status()
-    data = r.json()
-
-    text = data["message"]["content"]
     return {
         "id": "chatcmpl-local",
         "object": "chat.completion",

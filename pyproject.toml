@@ -4,7 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.11"
 
 [tool.setuptools]
-packages = ["backend", "ui", "config"]
+packages = ["backend", "ui", "config", "agents"]
 
 [build-system]
 requires = ["setuptools>=68"]
